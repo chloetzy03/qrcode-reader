@@ -8,7 +8,8 @@
 
 import UIKit
 
-class QRCodesViewController: UIViewController {
+class QRCodesViewController: UIViewController, UICollectionViewDelegate {
+    
 
     private let items: [QRCodeItem] = [
         QRCodeItem(text: "https://www.apple.com", date: .now, imageData: nil),
@@ -37,11 +38,26 @@ class QRCodesViewController: UIViewController {
     
     private func setUpUI(){
         
+        let layout = UICollectionViewFlowLayout()
+//        layout.itemSize = CGSize(width: 100, height: 100)
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        layout.scrollDirection = .vertical
+
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        //register cell
+        collectionView.register(QRCodeCell.self, forCellWithReuseIdentifier: QRCodeCell.reuseIdentifier)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
         headerView.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(headerView)
         view.addSubview(segmentedControl)
+        view.addSubview(collectionView)
 
         setUpHeaderView()
         setUpSegmentedControl()
@@ -95,7 +111,16 @@ class QRCodesViewController: UIViewController {
             ),
             segmentedControl.heightAnchor.constraint(
                 equalToConstant: 36
-            )
+            ),
+
+            // Collection view: fills the space under the segmented control
+            collectionView.topAnchor.constraint(
+                equalTo: segmentedControl.bottomAnchor,
+                constant: 16
+            ),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -148,6 +173,41 @@ class QRCodesViewController: UIViewController {
         }
     }
 }
+
+extension QRCodesViewController: UICollectionViewDataSource {
+
+    //how many boxes
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        items.count // one box per item
+    }
+    
+    //"Give me the box for row number X"
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // Ask for a recycled box (or a new one), and make sure it's our QRCodeCell type
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: QRCodeCell.reuseIdentifier,
+            for: indexPath
+        ) as? QRCodeCell else {
+            return UICollectionViewCell()
+        }
+
+        // Put this row's text and date into the box
+        cell.configure(with: items[indexPath.item])
+        return cell
+    }
+}
+
+extension QRCodesViewController: UICollectionViewDelegateFlowLayout {
+    //how big is each box
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // List row: as wide as the screen, 80 tall
+        CGSize(width: collectionView.bounds.width, height: 80)
+    }
+}
+
+
 
 
 #Preview {
