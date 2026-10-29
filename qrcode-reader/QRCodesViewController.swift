@@ -16,9 +16,9 @@ class QRCodesViewController: UIViewController {
     private let titleLabel = UILabel()
     private let scanButton = UIButton(type: .system)
     
-    private let tabsView = UIView()
-    private let gridButton = UIButton(type: .system)
-    private let listButton = UIButton(type: .system)
+    private let segmentedControl = UISegmentedControl(
+        items: ["Grid", "List"]
+    )
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,31 +30,13 @@ class QRCodesViewController: UIViewController {
     private func setUpUI(){
         
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        gridButton.translatesAutoresizingMaskIntoConstraints = false
-        listButton.translatesAutoresizingMaskIntoConstraints = false
-        tabsView.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(headerView)
-        view.addSubview(tabsView)
-        
+        view.addSubview(segmentedControl)
 
-        tabsView.addSubview(gridButton)
-        tabsView.addSubview(listButton)
-        
-        gridButton.addTarget(
-            self,
-            action: #selector(showGrid),
-            for: .touchUpInside
-        )
-
-        listButton.addTarget(
-            self,
-            action: #selector(showList),
-            for: .touchUpInside
-        )
-        
         setUpHeaderView()
-        setUpTabs()
+        setUpSegmentedControl()
     }
     
     private func setUpLayout(){
@@ -90,49 +72,21 @@ class QRCodesViewController: UIViewController {
             ),
             scanButton.heightAnchor.constraint(equalToConstant: 44),
             
-            // Tabs container
-            tabsView.topAnchor.constraint(
+            // Segmented control
+            segmentedControl.topAnchor.constraint(
                 equalTo: headerView.bottomAnchor,
                 constant: 24
             ),
-            tabsView.leadingAnchor.constraint(
+            segmentedControl.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor,
                 constant: 20
             ),
-            tabsView.trailingAnchor.constraint(
+            segmentedControl.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor,
                 constant: -20
             ),
-            tabsView.heightAnchor.constraint(equalToConstant: 44),
-
-            // Grid button
-            gridButton.leadingAnchor.constraint(
-                equalTo: tabsView.leadingAnchor
-            ),
-            gridButton.topAnchor.constraint(
-                equalTo: tabsView.topAnchor
-            ),
-            gridButton.bottomAnchor.constraint(
-                equalTo: tabsView.bottomAnchor
-            ),
-            gridButton.trailingAnchor.constraint(
-                equalTo: tabsView.centerXAnchor,
-                constant: -6
-            ),
-
-            // List button
-            listButton.leadingAnchor.constraint(
-                equalTo: tabsView.centerXAnchor,
-                constant: 6
-            ),
-            listButton.trailingAnchor.constraint(
-                equalTo: tabsView.trailingAnchor
-            ),
-            listButton.topAnchor.constraint(
-                equalTo: tabsView.topAnchor
-            ),
-            listButton.bottomAnchor.constraint(
-                equalTo: tabsView.bottomAnchor
+            segmentedControl.heightAnchor.constraint(
+                equalToConstant: 36
             )
         ])
     }
@@ -164,49 +118,26 @@ class QRCodesViewController: UIViewController {
         scanButton.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(scanButton)
     }
-    
-    private func setUpTabs() {
-        gridButton.setTitle("Grid", for: .normal)
-        listButton.setTitle("List", for: .normal)
 
-        gridButton.backgroundColor = .systemBlue
-        gridButton.setTitleColor(.white, for: .normal)
+    private func setUpSegmentedControl() {
+        segmentedControl.selectedSegmentIndex = 0
 
-        listButton.backgroundColor = .secondarySystemBackground
-        listButton.setTitleColor(.label, for: .normal)
-
-        gridButton.layer.cornerRadius = 10
-        listButton.layer.cornerRadius = 10
-    }
-    
-    @objc private func showGrid() {
-        updateTabSelection(isGrid: true)
-    }
-
-    @objc private func showList() {
-        updateTabSelection(isGrid: false)
-    }
-    
-    private func updateTabSelection(isGrid: Bool) {
-        // Grid appearance
-        gridButton.backgroundColor = isGrid
-            ? .systemBlue
-            : .secondarySystemBackground
-
-        gridButton.setTitleColor(
-            isGrid ? .white : .label,
-            for: .normal
+        segmentedControl.addTarget(
+            self,
+            action: #selector(layoutChanged),
+            for: .valueChanged
         )
-
-        // List appearance
-        listButton.backgroundColor = isGrid
-            ? .secondarySystemBackground
-            : .systemBlue
-
-        listButton.setTitleColor(
-            isGrid ? .label : .white,
-            for: .normal
-        )
+    }
+    
+    @objc private func layoutChanged() {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            print("Grid selected")
+        case 1:
+            print("List selected")
+        default:
+            break
+        }
     }
 }
 
