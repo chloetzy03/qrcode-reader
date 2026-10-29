@@ -10,15 +10,16 @@ import UIKit
 import QRScanner
 import AVFoundation
 
-class QRCodesViewController: UIViewController, UICollectionViewDelegate {
+class QRCodesViewController: UIViewController, UICollectionViewDelegate, ScannerViewControllerDelegate {
+    func scannerViewController(
+        _ controller: ScannerViewController,
+        didScan code: String
+    ) {
+        saveQRCode(code)
+    }
     
-
-    private let items: [QRCodeItem] = [
-        QRCodeItem(text: "https://www.apple.com", date: .now, imageData: nil),
-        QRCodeItem(text: "WIFI:T:WPA;S:MyNetwork;P:password123;;", date: .now.addingTimeInterval(-3600), imageData: nil),
-        QRCodeItem(text: "mailto:hello@example.com", date: .now.addingTimeInterval(-7200), imageData: nil),
-        QRCodeItem(text: "tel:+1234567890", date: .now.addingTimeInterval(-10800), imageData: nil)
-    ]
+    
+    private var items: [QRCodeItem] = []
     
     private var collectionView: UICollectionView!
     
@@ -41,11 +42,11 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate {
     private func setUpUI(){
         
         let layout = UICollectionViewFlowLayout()
-//        layout.itemSize = CGSize(width: 100, height: 100)
+        //        layout.itemSize = CGSize(width: 100, height: 100)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
-
+        
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         //register cell
@@ -56,22 +57,16 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         view.addSubview(headerView)
         view.addSubview(segmentedControl)
         view.addSubview(collectionView)
-
+        
         scanButton.addTarget(
             self,
             action: #selector(scanButtonTapped),
             for: .touchUpInside
         )
-        
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(headerView)
-        view.addSubview(segmentedControl)
         
         setUpHeaderView()
         setUpSegmentedControl()
@@ -126,7 +121,7 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate {
             segmentedControl.heightAnchor.constraint(
                 equalToConstant: 36
             ),
-
+            
             // Collection view: fills the space under the segmented control
             collectionView.topAnchor.constraint(
                 equalTo: segmentedControl.bottomAnchor,
@@ -177,6 +172,8 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @objc private func layoutChanged() {
+        collectionView.collectionViewLayout.invalidateLayout()
+        
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             print("Grid selected")
@@ -196,17 +193,17 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate {
                 message: "Camera access is enabled. Would you like to start scanning?",
                 preferredStyle: .alert
             )
-
+            
             alert.addAction(
                 UIAlertAction(title: "Cancel", style: .cancel)
             )
-
+            
             alert.addAction(
-                UIAlertAction(title: "Continue", style: .default) { _ in
-                    // Open your QR scanner here
+                UIAlertAction(title: "Continue", style: .default) { [weak self] _ in
+                    self?.openScanner()
                 }
             )
-
+            
             present(alert, animated: true)
             
         case .notDetermined:
@@ -215,8 +212,7 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate {
                     guard let self else { return }
                     
                     if granted {
-                        print("Camera permission granted")
-                        // Next: open the scanner
+                        self.openScanner()
                     } else {
                         self.showCameraPermissionAlert()
                     }
@@ -228,7 +224,7 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate {
             ) {
                 UIApplication.shared.open(settingsURL)
             }
-                
+            
         case .restricted:
             showCameraPermissionAlert()
             
@@ -244,11 +240,11 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate {
             preferredStyle: .alert
         )
         
-
+        
         alert.addAction(
             UIAlertAction(title: "Cancel", style: .cancel)
         )
-
+        
         alert.addAction(
             UIAlertAction(title: "Open Settings", style: .default) { _ in
                 guard let settingsURL = URL(
@@ -256,21 +252,43 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate {
                 ) else {
                     return
                 }
-
+                
                 UIApplication.shared.open(settingsURL)
             }
         )
-
+        
         present(alert, animated: true)
+    }
+    
+    private func openScanner() {
+        let scannerVC = ScannerViewController()
+        
+        scannerVC.delegate = self
+        scannerVC.modalPresentationStyle = .fullScreen
+        
+        present(scannerVC, animated: true)
+    }
+    
+    @MainActor
+    private func saveQRCode(_ code: String) {
+        let newItem = QRCodeItem(
+            text: code,
+            date: .now
+        )
+        
+        items.insert(newItem, at: 0)
+        
+        collectionView.reloadData()
     }
 }
 
 extension QRCodesViewController: UICollectionViewDataSource {
-
+    
     //how many boxes
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         items.count // one box per item
     }
+    
     
     //"Give me the box for row number X"
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -281,7 +299,7 @@ extension QRCodesViewController: UICollectionViewDataSource {
         ) as? QRCodeCell else {
             return UICollectionViewCell()
         }
-
+        
         // Put this row's text and date into the box
         cell.configure(with: items[indexPath.item])
         return cell
@@ -289,12 +307,36 @@ extension QRCodesViewController: UICollectionViewDataSource {
 }
 
 extension QRCodesViewController: UICollectionViewDelegateFlowLayout {
-    //how big is each box
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // List row: as wide as the screen, 80 tall
-        CGSize(width: collectionView.bounds.width, height: 80)
+//    //how big is each box
+//    func collectionView(
+//        _ collectionView: UICollectionView,
+//        layout collectionViewLayout: UICollectionViewLayout,
+//        sizeForItemAt indexPath: IndexPath
+//    ) -> CGSize {
+//        let spacing: CGFloat = 10
+//        let width = (collectionView.bounds.width - spacing) / 2
+//
+//        return CGSize(width: width, height: width)
+//    }
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+
+        let spacing: CGFloat = 10
+
+        if segmentedControl.selectedSegmentIndex == 0 {
+            // Grid: two square cards per row
+            let width = (collectionView.bounds.width - spacing) / 2
+            return CGSize(width: width, height: width)
+        } else {
+            // List: full-width horizontal rows (your original layout)
+            return CGSize(
+                width: collectionView.bounds.width,
+                height: 80
+            )
+        }
     }
 }
 
@@ -302,5 +344,5 @@ extension QRCodesViewController: UICollectionViewDelegateFlowLayout {
 
 
 #Preview {
-    UINavigationController(rootViewController: QRCodesViewController()) 
+    UINavigationController(rootViewController: QRCodesViewController())
 }
