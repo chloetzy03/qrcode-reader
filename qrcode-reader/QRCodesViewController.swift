@@ -9,6 +9,13 @@
 import UIKit
 
 class QRCodesViewController: UIViewController {
+
+    private let items: [QRCodeItem] = [
+        QRCodeItem(text: "https://www.apple.com", date: .now, imageData: nil),
+        QRCodeItem(text: "WIFI:T:WPA;S:MyNetwork;P:password123;;", date: .now.addingTimeInterval(-3600), imageData: nil),
+        QRCodeItem(text: "mailto:hello@example.com", date: .now.addingTimeInterval(-7200), imageData: nil),
+        QRCodeItem(text: "tel:+1234567890", date: .now.addingTimeInterval(-10800), imageData: nil)
+    ]
     
     private var collectionView: UICollectionView!
     
