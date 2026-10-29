@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreImage.CIFilterBuiltins
 
 class QRCodeDetailViewController: UIViewController {
 
@@ -45,10 +46,14 @@ class QRCodeDetailViewController: UIViewController {
         titleLabel.text = "Scan Again"
         titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
 
-        // Placeholder until the real QR image is set
-        qrImageView.image = UIImage(systemName: "qrcode")
         qrImageView.tintColor = .label
         qrImageView.contentMode = .scaleAspectFit
+        // Show the real QR code. If it fails, keep the placeholder icon
+        qrImageView.image = makeQRImage(from: item.text) ?? UIImage(systemName: "qrcode")
+        //prevent blurriness when scaled up
+        qrImageView.layer.magnificationFilter = .nearest
+        //for dark mode
+        qrImageView.backgroundColor = .white
 
         instructionLabel.text = "Hold another device to scan this code"
         instructionLabel.font = .systemFont(ofSize: 16, weight: .semibold)
@@ -100,10 +105,33 @@ class QRCodeDetailViewController: UIViewController {
             dateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
+    
+    // Turn a piece of text into a QR code picture
+    private func makeQRImage(from text: String) -> UIImage? {
+        //Get iOS's built-in QR code maker
+        let filter = CIFilter.qrCodeGenerator()
+
+        //Give it the text, converted into raw data
+        filter.message = Data(text.utf8)
+
+        // hands back a tiny image/nothing, if it failed
+        guard let outputImage = filter.outputImage else { return nil }
+
+        // Enlarge 10x so it's big and sharp enough to scan
+        let scaledImage = outputImage.transformed(by: CGAffineTransform(scaleX: 10, y: 10))
+
+        // Render the recipe into a real picture (UIImageView can't show it directly)
+        let context = CIContext()
+        guard let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) else { return nil }
+
+        return UIImage(cgImage: cgImage)
+    }
+    
 
     @objc private func closeTapped() {
         dismiss(animated: true)
     }
+    
 }
 
 
