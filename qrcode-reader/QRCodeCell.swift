@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class QRCodeCell: UICollectionViewCell {
 
@@ -86,24 +87,50 @@ class QRCodeCell: UICollectionViewCell {
 }
 
 
+//MARK: for Preview
 
-#Preview {
-    // English: "Make a blank screen to hold the cell."
-    let screen = UIViewController()
-    screen.view.backgroundColor = .systemGroupedBackground
+struct QRCodeCellPreview: PreviewProvider {
+    static var previews: some View {
+        QRCodeCellPreviewWrapper()
+    }
+}
 
-    // English: "Make one cell and fill it with a fake QR card."
-    let cell = QRCodeCell()
-    cell.configure(with: QRCodeItem(text: "https://www.apple.com", date: .now))
-    cell.translatesAutoresizingMaskIntoConstraints = false
-    screen.view.addSubview(cell)
+struct QRCodeCellPreviewWrapper: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        let screen = UIViewController()
+        screen.view.backgroundColor = .systemGroupedBackground
 
-    // English: "Place it near the top, 16pt side margins, fixed height of 80 (like a list row)."
-    NSLayoutConstraint.activate([
-        cell.topAnchor.constraint(equalTo: screen.view.safeAreaLayoutGuide.topAnchor, constant: 16),
-        cell.leadingAnchor.constraint(equalTo: screen.view.leadingAnchor, constant: 16),
-        cell.trailingAnchor.constraint(equalTo: screen.view.trailingAnchor, constant: -16),
-        cell.heightAnchor.constraint(equalToConstant: 80)
-    ])
-    return screen
+        let cell = QRCodeCell()
+        cell.configure(with: QRCodeItem(
+            text: "https://www.apple.com",
+            date: .now
+        ))
+        cell.translatesAutoresizingMaskIntoConstraints = false
+        screen.view.addSubview(cell)
+
+        NSLayoutConstraint.activate([
+            cell.topAnchor.constraint(
+                equalTo: screen.view.safeAreaLayoutGuide.topAnchor,
+                constant: 16
+            ),
+            cell.leadingAnchor.constraint(
+                equalTo: screen.view.leadingAnchor,
+                constant: 16
+            ),
+            cell.trailingAnchor.constraint(
+                equalTo: screen.view.trailingAnchor,
+                constant: -16
+            ),
+            cell.heightAnchor.constraint(equalToConstant: 80)
+        ])
+
+        return screen
+    }
+
+    func updateUIViewController(
+        _ uiViewController: UIViewController,
+        context: Context
+    ) {
+        // No updates needed for this static preview.
+    }
 }

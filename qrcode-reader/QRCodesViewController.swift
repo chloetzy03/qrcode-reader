@@ -7,6 +7,8 @@
 
 
 import UIKit
+import QRScanner
+import AVFoundation
 
 class QRCodesViewController: UIViewController, UICollectionViewDelegate {
     
@@ -59,6 +61,18 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate {
         view.addSubview(segmentedControl)
         view.addSubview(collectionView)
 
+        scanButton.addTarget(
+            self,
+            action: #selector(scanButtonTapped),
+            for: .touchUpInside
+        )
+        
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(headerView)
+        view.addSubview(segmentedControl)
+        
         setUpHeaderView()
         setUpSegmentedControl()
     }
@@ -151,10 +165,10 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate {
         scanButton.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(scanButton)
     }
-
+    
     private func setUpSegmentedControl() {
         segmentedControl.selectedSegmentIndex = 0
-
+        
         segmentedControl.addTarget(
             self,
             action: #selector(layoutChanged),
@@ -171,6 +185,83 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate {
         default:
             break
         }
+    }
+    
+    @objc private func scanButtonTapped(){
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+            
+        case .authorized:
+            let alert = UIAlertController(
+                title: "Camera Access",
+                message: "Camera access is enabled. Would you like to start scanning?",
+                preferredStyle: .alert
+            )
+
+            alert.addAction(
+                UIAlertAction(title: "Cancel", style: .cancel)
+            )
+
+            alert.addAction(
+                UIAlertAction(title: "Continue", style: .default) { _ in
+                    // Open your QR scanner here
+                }
+            )
+
+            present(alert, animated: true)
+            
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+                Task { @MainActor in
+                    guard let self else { return }
+                    
+                    if granted {
+                        print("Camera permission granted")
+                        // Next: open the scanner
+                    } else {
+                        self.showCameraPermissionAlert()
+                    }
+                }
+            }
+        case .denied:
+            if let settingsURL = URL(
+                string: UIApplication.openSettingsURLString
+            ) {
+                UIApplication.shared.open(settingsURL)
+            }
+                
+        case .restricted:
+            showCameraPermissionAlert()
+            
+        @unknown default:
+            showCameraPermissionAlert()
+        }
+    }
+    
+    private func showCameraPermissionAlert() {
+        let alert = UIAlertController(
+            title: "Camera Access Needed",
+            message: "Please allow camera access in Settings to scan QR codes.",
+            preferredStyle: .alert
+        )
+        
+
+        alert.addAction(
+            UIAlertAction(title: "Cancel", style: .cancel)
+        )
+
+        alert.addAction(
+            UIAlertAction(title: "Open Settings", style: .default) { _ in
+                guard let settingsURL = URL(
+                    string: UIApplication.openSettingsURLString
+                ) else {
+                    return
+                }
+
+                UIApplication.shared.open(settingsURL)
+            }
+        )
+
+        present(alert, animated: true)
     }
 }
 
