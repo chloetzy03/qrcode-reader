@@ -9,8 +9,17 @@
 import UIKit
 import QRScanner
 
+protocol ScannerViewControllerDelegate: AnyObject {
+    func scannerViewController(
+        _ controller: ScannerViewController,
+        didScan code: String
+    )
+    
+}
 class ScannerViewController: UIViewController, QRScannerViewDelegate {
 
+    weak var delegate: ScannerViewControllerDelegate?
+    
     // MARK: - UI
 
     private let titleLabel = UILabel()
@@ -23,7 +32,8 @@ class ScannerViewController: UIViewController, QRScannerViewDelegate {
     // MARK: - Scanner
 
     // TODO: Create your QRScannerView property here.
-
+    private let qrScannerView = QRScannerView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,6 +43,16 @@ class ScannerViewController: UIViewController, QRScannerViewDelegate {
         setUpLayout()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        qrScannerView.startRunning()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        qrScannerView.stopRunning()
+    }
+    
     // MARK: - UI Setup
 
     private func setUpUI() {
@@ -90,7 +110,8 @@ class ScannerViewController: UIViewController, QRScannerViewDelegate {
             scannerContainerView,
             scanFrameView,
             torchButton,
-            closeButton
+            closeButton,
+            qrScannerView
         ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -98,9 +119,12 @@ class ScannerViewController: UIViewController, QRScannerViewDelegate {
         view.addSubview(titleLabel)
         view.addSubview(instructionLabel)
         view.addSubview(scannerContainerView)
+        scannerContainerView.addSubview(qrScannerView)
         scannerContainerView.addSubview(scanFrameView)
         view.addSubview(torchButton)
         view.addSubview(closeButton)
+        
+        qrScannerView.configure(delegate: self)
     }
 
     private func setUpLayout() {
@@ -179,8 +203,21 @@ class ScannerViewController: UIViewController, QRScannerViewDelegate {
             torchButton.centerXAnchor.constraint(
                 equalTo: view.centerXAnchor
             ),
-            torchButton.widthAnchor.constraint(equalToConstant: 50),
-            torchButton.heightAnchor.constraint(equalToConstant: 50)
+            torchButton.widthAnchor.constraint(equalToConstant: 50)
+            torchButton.heightAnchor.constraint(equalToConstant: 50),
+            // QR scanner fills the container
+            qrScannerView.topAnchor.constraint(
+                equalTo: scannerContainerView.topAnchor
+            ),
+            qrScannerView.leadingAnchor.constraint(
+                equalTo: scannerContainerView.leadingAnchor
+            ),
+            qrScannerView.trailingAnchor.constraint(
+                equalTo: scannerContainerView.trailingAnchor
+            ),
+            qrScannerView.bottomAnchor.constraint(
+                equalTo: scannerContainerView.bottomAnchor
+            ),
         ])
     }
 
@@ -200,7 +237,8 @@ class ScannerViewController: UIViewController, QRScannerViewDelegate {
         _ qrScannerView: QRScannerView,
         didSuccess code: String
     ) {
-        print("Scanned QR code: \(code)")
+        delegate?.scannerViewController(self, didScan: code)
+        dismiss(animated: true)
     }
 
     func qrScannerView(
@@ -209,6 +247,7 @@ class ScannerViewController: UIViewController, QRScannerViewDelegate {
     ) {
         print("Scanner error: \(error)")
     }
+    
 }
 
 #Preview {

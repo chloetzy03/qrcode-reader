@@ -17,6 +17,8 @@
 		FC11C7273092E48300554D68 /* RxSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C7223092E48300554D68 /* RxSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FC11C72A3092E48300554D68 /* RxRelay.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C7243092E48300554D68 /* RxRelay.xcframework */; };
 		FC11C72B3092E48300554D68 /* RxRelay.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C7243092E48300554D68 /* RxRelay.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FCB9DA83309308DD00A426B2 /* QRScanner.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCB9DA7B3093086E00A426B2 /* QRScanner.xcframework */; };
+		FCB9DA84309308DD00A426B2 /* QRScanner.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FCB9DA7B3093086E00A426B2 /* QRScanner.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,7 +28,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6B7A46B530931EFA00BE1B66 /* QRScanner.xcframework in Embed Frameworks */,
+				FCB9DA84309308DD00A426B2 /* QRScanner.xcframework in Embed Frameworks */,
 				FC11C7273092E48300554D68 /* RxSwift.xcframework in Embed Frameworks */,
 				FC11C71C3092E33E00554D68 /* Alamofire.xcframework in Embed Frameworks */,
 				FC11C72B3092E48300554D68 /* RxRelay.xcframework in Embed Frameworks */,
@@ -56,6 +58,17 @@
 		FC11C71A3092E33E00554D68 /* RxCocoa.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxCocoa.xcframework; path = Carthage/Build/RxCocoa.xcframework; sourceTree = "<group>"; };
 		FC11C7223092E48300554D68 /* RxSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxSwift.xcframework; path = Carthage/Build/RxSwift.xcframework; sourceTree = "<group>"; };
 		FC11C7243092E48300554D68 /* RxRelay.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxRelay.xcframework; path = Carthage/Build/RxRelay.xcframework; sourceTree = "<group>"; };
+		FCB9DA753093086E00A426B2 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
+		FCB9DA773093086E00A426B2 /* .Alamofire.version */ = {isa = PBXFileReference; lastKnownFileType = text; path = .Alamofire.version; sourceTree = "<group>"; };
+		FCB9DA783093086E00A426B2 /* .QRScanner.version */ = {isa = PBXFileReference; lastKnownFileType = text; path = .QRScanner.version; sourceTree = "<group>"; };
+		FCB9DA793093086E00A426B2 /* .RxSwift.version */ = {isa = PBXFileReference; lastKnownFileType = text; path = .RxSwift.version; sourceTree = "<group>"; };
+		FCB9DA7A3093086E00A426B2 /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Alamofire.xcframework; sourceTree = "<group>"; };
+		FCB9DA7B3093086E00A426B2 /* QRScanner.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = QRScanner.xcframework; sourceTree = "<group>"; };
+		FCB9DA7C3093086E00A426B2 /* RxBlocking.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RxBlocking.xcframework; sourceTree = "<group>"; };
+		FCB9DA7D3093086E00A426B2 /* RxCocoa.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RxCocoa.xcframework; sourceTree = "<group>"; };
+		FCB9DA7E3093086E00A426B2 /* RxRelay.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RxRelay.xcframework; sourceTree = "<group>"; };
+		FCB9DA7F3093086E00A426B2 /* RxSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RxSwift.xcframework; sourceTree = "<group>"; };
+		FCB9DA803093086E00A426B2 /* RxTest.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RxTest.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -84,7 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B7A46B430931EFA00BE1B66 /* QRScanner.xcframework in Frameworks */,
+				FCB9DA83309308DD00A426B2 /* QRScanner.xcframework in Frameworks */,
 				FC11C7263092E48300554D68 /* RxSwift.xcframework in Frameworks */,
 				FC11C71B3092E33E00554D68 /* Alamofire.xcframework in Frameworks */,
 				FC11C71D3092E33E00554D68 /* RxCocoa.xcframework in Frameworks */,
@@ -151,13 +164,40 @@
 		FC11C7183092E33E00554D68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6B0CFC0330931EC900E0EE44 /* Carthage */,
+				FCB9DA813093086E00A426B2 /* Build */,
 				FC11C7243092E48300554D68 /* RxRelay.xcframework */,
 				FC11C7223092E48300554D68 /* RxSwift.xcframework */,
 				FC11C7193092E33E00554D68 /* Alamofire.xcframework */,
 				FC11C71A3092E33E00554D68 /* RxCocoa.xcframework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FCB9DA763093086E00A426B2 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				FCB9DA753093086E00A426B2 /* Alamofire.framework */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		FCB9DA813093086E00A426B2 /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				FCB9DA763093086E00A426B2 /* iOS */,
+				FCB9DA773093086E00A426B2 /* .Alamofire.version */,
+				FCB9DA783093086E00A426B2 /* .QRScanner.version */,
+				FCB9DA793093086E00A426B2 /* .RxSwift.version */,
+				FCB9DA7A3093086E00A426B2 /* Alamofire.xcframework */,
+				FCB9DA7B3093086E00A426B2 /* QRScanner.xcframework */,
+				FCB9DA7C3093086E00A426B2 /* RxBlocking.xcframework */,
+				FCB9DA7D3093086E00A426B2 /* RxCocoa.xcframework */,
+				FCB9DA7E3093086E00A426B2 /* RxRelay.xcframework */,
+				FCB9DA7F3093086E00A426B2 /* RxSwift.xcframework */,
+				FCB9DA803093086E00A426B2 /* RxTest.xcframework */,
+			);
+			name = Build;
+			path = Carthage/Build;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,8 +288,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 755V872H72;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "qrcode-reader/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need camera access to scan QR codes.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -278,8 +320,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 755V872H72;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "qrcode-reader/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need camera access to scan QR codes.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
