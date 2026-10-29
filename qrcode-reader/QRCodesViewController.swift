@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  QRCodesViewController.swift
 //  qrcode-reader
 //
 //  Created by Shofia Ghazali on 29/10/26.
