@@ -10,16 +10,15 @@ import UIKit
 import QRScanner
 import AVFoundation
 
-class QRCodesViewController: UIViewController, UICollectionViewDelegate, ScannerViewControllerDelegate {
-    func scannerViewController(
-        _ controller: ScannerViewController,
-        didScan code: String
-    ) {
-        saveQRCode(code)
-    }
+class QRCodesViewController: UIViewController, UICollectionViewDelegate {
     
-    
-    private var items: [QRCodeItem] = []
+
+    private let items: [QRCodeItem] = [
+        QRCodeItem(text: "https://www.apple.com", date: .now),
+        QRCodeItem(text: "WIFI:T:WPA;S:MyNetwork;P:password123;;", date: .now.addingTimeInterval(-3600)),
+        QRCodeItem(text: "mailto:hello@example.com", date: .now.addingTimeInterval(-7200)),
+        QRCodeItem(text: "tel:+1234567890", date: .now.addingTimeInterval(-10800))
+    ]
     
     private var collectionView: UICollectionView!
     
@@ -42,7 +41,7 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate, Scanner
     private func setUpUI(){
         
         let layout = UICollectionViewFlowLayout()
-        //        layout.itemSize = CGSize(width: 100, height: 100)
+//        layout.itemSize = CGSize(width: 100, height: 100)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
@@ -174,6 +173,8 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate, Scanner
     @objc private func layoutChanged() {
         collectionView.collectionViewLayout.invalidateLayout()
         
+          // Refresh the displayed cells
+    collectionView.reloadData()
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             print("Grid selected")
@@ -223,7 +224,7 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate, Scanner
                 string: UIApplication.openSettingsURLString
             ) {
                 UIApplication.shared.open(settingsURL)
-            }
+            }                
             
         case .restricted:
             showCameraPermissionAlert()
@@ -239,8 +240,6 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate, Scanner
             message: "Please allow camera access in Settings to scan QR codes.",
             preferredStyle: .alert
         )
-        
-        
         alert.addAction(
             UIAlertAction(title: "Cancel", style: .cancel)
         )
@@ -252,6 +251,17 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate, Scanner
                 ) else {
                     return
                 }
+
+                UIApplication.shared.open(settingsURL)
+            }
+        )
+
+        present(alert, animated: true)
+    }
+}
+
+extension QRCodesViewController: UICollectionViewDataSource {
+
                 
                 UIApplication.shared.open(settingsURL)
             }
@@ -299,6 +309,7 @@ extension QRCodesViewController: UICollectionViewDataSource {
         ) as? QRCodeCell else {
             return UICollectionViewCell()
         }
+
         
         // Put this row's text and date into the box
         cell.configure(with: items[indexPath.item])
@@ -306,18 +317,18 @@ extension QRCodesViewController: UICollectionViewDataSource {
     }
 }
 
+
+extension QRCodesViewController {
+  
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detail = QRCodeDetailViewController(item: items[indexPath.item])
+        present(detail, animated: true)
+    }
+}
+
+
+//MARK: Grid or List
 extension QRCodesViewController: UICollectionViewDelegateFlowLayout {
-//    //how big is each box
-//    func collectionView(
-//        _ collectionView: UICollectionView,
-//        layout collectionViewLayout: UICollectionViewLayout,
-//        sizeForItemAt indexPath: IndexPath
-//    ) -> CGSize {
-//        let spacing: CGFloat = 10
-//        let width = (collectionView.bounds.width - spacing) / 2
-//
-//        return CGSize(width: width, height: width)
-//    }
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,

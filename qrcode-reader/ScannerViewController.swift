@@ -203,7 +203,7 @@ class ScannerViewController: UIViewController, QRScannerViewDelegate {
             torchButton.centerXAnchor.constraint(
                 equalTo: view.centerXAnchor
             ),
-            torchButton.widthAnchor.constraint(equalToConstant: 50),
+            torchButton.widthAnchor.constraint(equalToConstant: 50)
             torchButton.heightAnchor.constraint(equalToConstant: 50),
             // QR scanner fills the container
             qrScannerView.topAnchor.constraint(

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B7A46B430931EFA00BE1B66 /* QRScanner.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B0CFBF830931EC900E0EE44 /* QRScanner.xcframework */; };
+		6B7A46B530931EFA00BE1B66 /* QRScanner.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6B0CFBF830931EC900E0EE44 /* QRScanner.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FC11C71B3092E33E00554D68 /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C7193092E33E00554D68 /* Alamofire.xcframework */; };
 		FC11C71C3092E33E00554D68 /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C7193092E33E00554D68 /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FC11C71D3092E33E00554D68 /* RxCocoa.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C71A3092E33E00554D68 /* RxCocoa.xcframework */; };
@@ -38,6 +40,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6B0CFBF430931EC900E0EE44 /* .Alamofire.version */ = {isa = PBXFileReference; lastKnownFileType = text; path = .Alamofire.version; sourceTree = "<group>"; };
+		6B0CFBF530931EC900E0EE44 /* .QRScanner.version */ = {isa = PBXFileReference; lastKnownFileType = text; path = .QRScanner.version; sourceTree = "<group>"; };
+		6B0CFBF630931EC900E0EE44 /* .RxSwift.version */ = {isa = PBXFileReference; lastKnownFileType = text; path = .RxSwift.version; sourceTree = "<group>"; };
+		6B0CFBF730931EC900E0EE44 /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Alamofire.xcframework; sourceTree = "<group>"; };
+		6B0CFBF830931EC900E0EE44 /* QRScanner.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = QRScanner.xcframework; sourceTree = "<group>"; };
+		6B0CFBF930931EC900E0EE44 /* RxBlocking.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RxBlocking.xcframework; sourceTree = "<group>"; };
+		6B0CFBFA30931EC900E0EE44 /* RxCocoa.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RxCocoa.xcframework; sourceTree = "<group>"; };
+		6B0CFBFB30931EC900E0EE44 /* RxRelay.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RxRelay.xcframework; sourceTree = "<group>"; };
+		6B0CFBFC30931EC900E0EE44 /* RxSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RxSwift.xcframework; sourceTree = "<group>"; };
+		6B0CFBFD30931EC900E0EE44 /* RxTest.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = RxTest.xcframework; sourceTree = "<group>"; };
+		6B0CFBFF30931EC900E0EE44 /* Alamofire */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Alamofire; sourceTree = "<group>"; };
+		6B0CFC0030931EC900E0EE44 /* QRScanner */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = QRScanner; sourceTree = "<group>"; };
+		6B0CFC0130931EC900E0EE44 /* RxSwift */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RxSwift; sourceTree = "<group>"; };
 		FC11C6FF3092DD0A00554D68 /* qrcode-reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "qrcode-reader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC11C7193092E33E00554D68 /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
 		FC11C71A3092E33E00554D68 /* RxCocoa.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxCocoa.xcframework; path = Carthage/Build/RxCocoa.xcframework; sourceTree = "<group>"; };
@@ -93,6 +108,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B0CFBFE30931EC900E0EE44 /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				6B0CFBF430931EC900E0EE44 /* .Alamofire.version */,
+				6B0CFBF530931EC900E0EE44 /* .QRScanner.version */,
+				6B0CFBF630931EC900E0EE44 /* .RxSwift.version */,
+				6B0CFBF730931EC900E0EE44 /* Alamofire.xcframework */,
+				6B0CFBF830931EC900E0EE44 /* QRScanner.xcframework */,
+				6B0CFBF930931EC900E0EE44 /* RxBlocking.xcframework */,
+				6B0CFBFA30931EC900E0EE44 /* RxCocoa.xcframework */,
+				6B0CFBFB30931EC900E0EE44 /* RxRelay.xcframework */,
+				6B0CFBFC30931EC900E0EE44 /* RxSwift.xcframework */,
+				6B0CFBFD30931EC900E0EE44 /* RxTest.xcframework */,
+			);
+			path = Build;
+			sourceTree = "<group>";
+		};
+		6B0CFC0230931EC900E0EE44 /* Checkouts */ = {
+			isa = PBXGroup;
+			children = (
+				6B0CFBFF30931EC900E0EE44 /* Alamofire */,
+				6B0CFC0030931EC900E0EE44 /* QRScanner */,
+				6B0CFC0130931EC900E0EE44 /* RxSwift */,
+			);
+			path = Checkouts;
+			sourceTree = "<group>";
+		};
+		6B0CFC0330931EC900E0EE44 /* Carthage */ = {
+			isa = PBXGroup;
+			children = (
+				6B0CFBFE30931EC900E0EE44 /* Build */,
+				6B0CFC0230931EC900E0EE44 /* Checkouts */,
+			);
+			path = Carthage;
+			sourceTree = "<group>";
+		};
 		FC11C6F63092DD0A00554D68 = {
 			isa = PBXGroup;
 			children = (
