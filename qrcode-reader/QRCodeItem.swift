@@ -19,7 +19,7 @@ struct QRCodeItem: Codable, Identifiable {
     var id = UUID()          // Unique ID for each card
     let text: String         // The text hidden inside the QR code
     let date: Date           // The date and time user scanned it
-    let imageData: Data?     // Stored as Data so it works with Codable
+    let imageData: Data? = nil   // Stored as Data so it works with Codable
     
     // A helper property to easily get a UIImage when you need to display it
     var image: UIImage? {
