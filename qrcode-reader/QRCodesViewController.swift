@@ -298,7 +298,13 @@ extension QRCodesViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-
+//When a box is tapped, open the detail sheet for that QR code
+extension QRCodesViewController {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detail = QRCodeDetailViewController(item: items[indexPath.item])
+        present(detail, animated: true)
+    }
+}
 
 
 #Preview {
