@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class QRCodesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +19,6 @@ class ViewController: UIViewController {
 
 
 #Preview {
-    ViewController()
+    QRCodesViewController()
 }
 
