@@ -19,12 +19,7 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate, Scanner
     }
     
     
-    private var items: [QRCodeItem] = [
-        QRCodeItem(text: "https://www.apple.com", date: .now),
-        QRCodeItem(text: "WIFI:T:WPA;S:MyNetwork;P:password123;;", date: .now.addingTimeInterval(-3600)),
-        QRCodeItem(text: "mailto:hello@example.com", date: .now.addingTimeInterval(-7200)),
-        QRCodeItem(text: "tel:+1234567890", date: .now.addingTimeInterval(-10800))
-    ]
+    private var items: [QRCodeItem] = []
     
     private var collectionView: UICollectionView!
     

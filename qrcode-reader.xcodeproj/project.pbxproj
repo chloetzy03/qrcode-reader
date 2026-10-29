@@ -237,6 +237,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 755V872H72;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "qrcode-reader/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need camera access to scan QR codes.";
@@ -268,6 +269,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 755V872H72;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "qrcode-reader/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need camera access to scan QR codes.";
