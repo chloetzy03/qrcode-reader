@@ -1,2 +1,3 @@
 github "Alamofire/Alamofire" "5.8.0"
 github "ReactiveX/RxSwift" "6.10.2"
+github "mercari/QRScanner" "2.0.1"
