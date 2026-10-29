@@ -13,7 +13,7 @@ import AVFoundation
 class QRCodesViewController: UIViewController, UICollectionViewDelegate {
     
 
-    private let items: [QRCodeItem] = [
+    private var items: [QRCodeItem] = [
         QRCodeItem(text: "https://www.apple.com", date: .now),
         QRCodeItem(text: "WIFI:T:WPA;S:MyNetwork;P:password123;;", date: .now.addingTimeInterval(-3600)),
         QRCodeItem(text: "mailto:hello@example.com", date: .now.addingTimeInterval(-7200)),
@@ -258,17 +258,6 @@ class QRCodesViewController: UIViewController, UICollectionViewDelegate {
 
         present(alert, animated: true)
     }
-}
-
-extension QRCodesViewController: UICollectionViewDataSource {
-
-                
-                UIApplication.shared.open(settingsURL)
-            }
-        )
-        
-        present(alert, animated: true)
-    }
     
     private func openScanner() {
         let scannerVC = ScannerViewController()
@@ -356,4 +345,14 @@ extension QRCodesViewController: UICollectionViewDelegateFlowLayout {
 
 #Preview {
     UINavigationController(rootViewController: QRCodesViewController())
+}
+
+extension QRCodesViewController: ScannerViewControllerDelegate {
+    
+    func scannerViewController(
+        _ controller: ScannerViewController,
+        didScan code: String
+    ) {
+        saveQRCode(code)
+    }
 }
