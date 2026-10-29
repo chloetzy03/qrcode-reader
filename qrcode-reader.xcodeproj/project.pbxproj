@@ -6,8 +6,40 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		FC11C71B3092E33E00554D68 /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C7193092E33E00554D68 /* Alamofire.xcframework */; };
+		FC11C71C3092E33E00554D68 /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C7193092E33E00554D68 /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FC11C71D3092E33E00554D68 /* RxCocoa.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C71A3092E33E00554D68 /* RxCocoa.xcframework */; };
+		FC11C71E3092E33E00554D68 /* RxCocoa.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C71A3092E33E00554D68 /* RxCocoa.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FC11C7263092E48300554D68 /* RxSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C7223092E48300554D68 /* RxSwift.xcframework */; };
+		FC11C7273092E48300554D68 /* RxSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C7223092E48300554D68 /* RxSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FC11C72A3092E48300554D68 /* RxRelay.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C7243092E48300554D68 /* RxRelay.xcframework */; };
+		FC11C72B3092E48300554D68 /* RxRelay.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC11C7243092E48300554D68 /* RxRelay.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FC11C71F3092E33E00554D68 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FC11C7273092E48300554D68 /* RxSwift.xcframework in Embed Frameworks */,
+				FC11C71C3092E33E00554D68 /* Alamofire.xcframework in Embed Frameworks */,
+				FC11C72B3092E48300554D68 /* RxRelay.xcframework in Embed Frameworks */,
+				FC11C71E3092E33E00554D68 /* RxCocoa.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		FC11C6FF3092DD0A00554D68 /* qrcode-reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "qrcode-reader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC11C7193092E33E00554D68 /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = Carthage/Build/Alamofire.xcframework; sourceTree = "<group>"; };
+		FC11C71A3092E33E00554D68 /* RxCocoa.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxCocoa.xcframework; path = Carthage/Build/RxCocoa.xcframework; sourceTree = "<group>"; };
+		FC11C7223092E48300554D68 /* RxSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxSwift.xcframework; path = Carthage/Build/RxSwift.xcframework; sourceTree = "<group>"; };
+		FC11C7243092E48300554D68 /* RxRelay.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RxRelay.xcframework; path = Carthage/Build/RxRelay.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +68,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC11C7263092E48300554D68 /* RxSwift.xcframework in Frameworks */,
+				FC11C71B3092E33E00554D68 /* Alamofire.xcframework in Frameworks */,
+				FC11C71D3092E33E00554D68 /* RxCocoa.xcframework in Frameworks */,
+				FC11C72A3092E48300554D68 /* RxRelay.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				FC11C7013092DD0A00554D68 /* qrcode-reader */,
+				FC11C7183092E33E00554D68 /* Frameworks */,
 				FC11C7003092DD0A00554D68 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,6 +95,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		FC11C7183092E33E00554D68 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FC11C7243092E48300554D68 /* RxRelay.xcframework */,
+				FC11C7223092E48300554D68 /* RxSwift.xcframework */,
+				FC11C7193092E33E00554D68 /* Alamofire.xcframework */,
+				FC11C71A3092E33E00554D68 /* RxCocoa.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -68,6 +116,7 @@
 				FC11C6FB3092DD0A00554D68 /* Sources */,
 				FC11C6FC3092DD0A00554D68 /* Frameworks */,
 				FC11C6FD3092DD0A00554D68 /* Resources */,
+				FC11C71F3092E33E00554D68 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
