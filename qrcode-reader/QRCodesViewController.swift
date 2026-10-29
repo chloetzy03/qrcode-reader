@@ -5,6 +5,7 @@
 //  Created by Shofia Ghazali on 29/10/26.
 //
 
+
 import UIKit
 
 class QRCodesViewController: UIViewController {
@@ -143,6 +144,5 @@ class QRCodesViewController: UIViewController {
 
 
 #Preview {
-    QRCodesViewController()
+    UINavigationController(rootViewController: QRCodesViewController()) 
 }
-
